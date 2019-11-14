@@ -1,0 +1,14 @@
+/home/share/core/webconfig/log/system.log {
+    size 1024k
+    rotate 30
+    create
+    notifempty
+    nocompress
+    missingok
+    copytruncate
+    su root root
+    postrotate
+        echo "rotate log"
+    endscript
+}
+

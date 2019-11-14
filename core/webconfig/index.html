@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>智能网关调试助手</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<meta HTTP-EQUIV="Expires" CONTENT="-1">
+		<link rel="stylesheet" href="../bootstrap-4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../bootstrap-4.0.0/font-awesome-4.7.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="../bootstrap-4.0.0/bootstrap-table/bootstrap-table.min.css" />
+		<link rel="stylesheet" href="../bootstrap-4.0.0/bootstrap-slider/css/bootstrap-slider.min.css" />
+		<link rel="stylesheet" href="../common/sweetalert2.min.css" />
+		<!--<script>window.resizeTo(1000,800);</script>-->
+		<style type="text/css">
+			body {
+				letter-spacing: 0.08em;
+			}
+			
+			#gwname {
+				color: whitesmoke;
+				font-size: 1.1em;
+			}
+			
+			.line {
+				clear: both;
+				margin-top: 5px;
+				margin-bottom: 5px;
+				height: 1px;
+				width: 100%;
+				background-color: #161c33;
+			}
+			
+			.information {
+				color: whitesmoke;
+			}
+			
+		</style>
+	</head>
+	<body style="background-color: #1d2338;">
+		<div class="container" style="margin-top: 10px;">
+			<div>
+				<p id="version" style="color: whitesmoke; font-size: 0.8em;float: right;">正在获取版本号</p>
+				<div style="clear: both;"></div>
+			</div>
+			<div id="headerInfo">
+				<div class="alert alert-primary">
+				  <strong>网络正在连接...</strong>
+				</div>
+			</div>
+			<!-- 显示资源利用率等信息 -->
+			<div class="information">
+				<!-- 名称 -->
+				<div class="row">
+					<div class="col-5 col-sm-4 col-md-3 col-lg-3 col-xl-2"><i class="fa fa-commenting-o" aria-hidden="true"></i><span>&nbsp;名称</span></div>
+					<div class="col-7 col-sm-8 col-md-9 col-lg-9 col-xl-10"><span id="name">正在获取...</span></div>
+				</div>
+				<!-- MAC -->
+				<div class="row">
+					<div class="col-5 col-sm-4 col-md-3 col-lg-3 col-xl-2"><i class="fa fa-location-arrow" aria-hidden="true"></i><span>&nbsp;&nbsp;MAC地址</span></div>
+					<div class="col-7 col-sm-8 col-md-9 col-lg-9 col-xl-10"><span id="mac">正在获取...</span></div>
+				</div>
+				<!-- CPU占用率 -->
+				<div class="row">
+					<div class="col-5 col-sm-4 col-md-3 col-lg-3 col-xl-2"><i class="fa fa-opera" aria-hidden="true"></i><span>&nbsp;CPU占用率</span></div>
+					<div class="col-7 col-sm-8 col-md-9 col-lg-9 col-xl-10"><span id="cpuRate">正在获取...</span></div>
+				</div>
+				<!-- 内存占用率 -->
+				<div class="row">
+					<div class="col-5 col-sm-4 col-md-3 col-lg-3 col-xl-2"><i class="fa fa-link" aria-hidden="true"></i><span>&nbsp;内存占用率</span></div>
+					<div class="col-7 col-sm-8 col-md-9 col-lg-9 col-xl-10"><span id="memRate">正在获取...</span></div>
+				</div>
+				<!-- emmc用率 -->
+				<!--
+				<div class="row">
+					<div class="col-5 col-sm-4 col-md-3 col-lg-3 col-xl-2"><i class="fa fa-bolt" aria-hidden="true"></i><span>&nbsp;&nbsp;硬盘占用率</span></div>
+					<div class="col-7 col-sm-8 col-md-9 col-lg-9 col-xl-10"><span id="diskRate">正在获取...</span></div>
+				</div>
+				-->
+				<!-- 温度 -->
+				<div class="row">
+					<div class="col-5 col-sm-4 col-md-3 col-lg-3 col-xl-2"><i class="fa fa-thermometer-half" aria-hidden="true"></i><span>&nbsp;&nbsp;芯片温度</span></div>
+					<div class="col-7 col-sm-8 col-md-9 col-lg-9 col-xl-10"><span id="temperature">正在获取...</span></div>
+				</div>
+				<div class="line"></div>
+				<!-- ip地址 -->
+				<div class="row">
+					<div class="col-5 col-sm-4 col-md-3 col-lg-3 col-xl-2"><i class="fa fa-cogs" aria-hidden="true"></i><span>&nbsp;IP地址</span></div>
+					<div class="col-7 col-sm-8 col-md-9 col-lg-9 col-xl-10"><span id="ip">正在获取...</span></div>
+				</div>
+				<!-- 子网掩码 -->
+				<div class="row">
+					<div class="col-5 col-sm-4 col-md-3 col-lg-3 col-xl-2"><i class="fa fa-cogs" aria-hidden="true"></i><span>&nbsp;子网掩码</span></div>
+					<div class="col-7 col-sm-8 col-md-9 col-lg-9 col-xl-10"><span id="netmask">正在获取...</span></div>
+				</div>
+				<!-- 网关地址 -->
+				<div class="row">
+					<div class="col-5 col-sm-4 col-md-3 col-lg-3 col-xl-2"><i class="fa fa-cogs" aria-hidden="true"></i><span>&nbsp;网关地址</span></div>
+					<div class="col-7 col-sm-8 col-md-9 col-lg-9 col-xl-10"><span id="gateway">正在获取...</span></div>
+				</div>
+				<!-- DNS1 -->
+				<div class="row">
+					<div class="col-5 col-sm-4 col-md-3 col-lg-3 col-xl-2"><i class="fa fa-cogs" aria-hidden="true"></i><span>&nbsp;DNS1</span></div>
+					<div class="col-7 col-sm-8 col-md-9 col-lg-9 col-xl-10"><span id="dns1">正在获取...</span></div>
+				</div>
+				<!-- DNS2 -->
+				<div id="dns2Div" class="row">
+					<div class="col-5 col-sm-4 col-md-3 col-lg-3 col-xl-2"><i class="fa fa-cogs" aria-hidden="true"></i><span>&nbsp;DNS2</span></div>
+					<div class="col-7 col-sm-8 col-md-9 col-lg-9 col-xl-10"><span id="dns2">正在获取...</span></div>
+				</div>
+			</div>
+			<div class="line"></div>
+			<div style="height: 30px;">
+			<button id='netConfitBtn' type="button" class="btn btn-outline-primary">配置网络信息</button>
+		</div>
+	</body>
+	<script src="../common/jquery.min.js"></script>
+	<script src="../common/popper.min.js"></script>
+	<script src="../common/underscore-min.js"></script>
+	<script src="../common/echarts.min.js"></script>
+	<script src="../common/jquery.qrcode.min.js"></script>
+	<script src="../bootstrap-4.0.0/js/bootstrap.min.js"></script>
+	<script src="../bootstrap-4.0.0/js/bootstrap.bundle.min.js"></script>
+	<script src="../bootstrap-4.0.0/bootstrap-table/bootstrap-table.min.js"></script>
+	<script src="../bootstrap-4.0.0/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+	<script src="../bootstrap-4.0.0/bootstrap-slider/bootstrap-slider.min.js"></script>
+	<script src="../common/jquery.timers.js"></script>
+	<script src="../common/jquery.tmpl.min.js"></script>
+	<script src="../common/sweetalert2.all.min.js"></script>
+	<script src="../common/paho-mqtt.js"></script>
+	<script src="../common/common.js"></script>
+	<script src="../common/rpcc.js"></script>
+	<script src="index/js/index.js"></script>
+</html>
